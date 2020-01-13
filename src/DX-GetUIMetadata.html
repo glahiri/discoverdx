@@ -1,0 +1,43 @@
+<html>
+<head>Get Pega UI Metadata</head>
+<body>
+<BR><BR>
+Type Case ID to Fetch : <input type = 'text' id = 'CASEID' value = '' />
+<BR><BR>
+Type Section to Fetch: <input type = 'text' id = 'Section' value = '' />
+<BR><BR>
+<input type = 'button' id = 'GETJSONVIEW' value = 'Get JSON Metadata from Pega' onclick = 'getPegaDatAjax()'/>
+<BR><BR>
+<div id = 'JSONContainer' />
+</body>
+</html>
+<script>
+
+
+const username = 'santanu.seth@tcs';
+const password = 'rules';
+var credentials = btoa(username + ':' + password);
+
+var str = "";
+
+function getPegaDatAjax()
+{
+const Http = new XMLHttpRequest();
+
+url = 'https://tcs01.pegalabs.io:443/prweb/api/v1/cases/' + document.getElementById('CASEID').value + '/views/' + document.getElementById('Section').value;
+
+Http.open("GET", url);
+Http.setRequestHeader('Authorization', 'Basic c2FudGFudS5zZXRoQHRjczpydWxlcw==');
+Http.send();
+Http.onreadystatechange = function() {
+	if(this.readyState == 4 && this.status == 200)
+    {
+
+	document.getElementById('JSONContainer').innerHTML = Http.responseText;
+
+	}
+}
+
+}
+
+</script>
