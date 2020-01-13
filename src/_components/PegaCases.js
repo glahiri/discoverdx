@@ -7,7 +7,12 @@ import { getCase, resetCase } from '../_actions/userActions';
 import {connect} from 'react-redux';
 
 class PegaCases extends Component {
-
+    constructor(props) {
+        super(props);
+        this.state = { 
+            seslectedCase: ''
+         };
+    }
     displayData = () => {
         if(this.props.user.selectedCase.isVisible)
             return this.props.user.selectedCase.apiData;
@@ -32,6 +37,11 @@ class PegaCases extends Component {
     }
 
     displayCase = (event,data) => {
+        const state = this.state;
+        this.setState({
+            ...state,
+            selectedCase: data.value
+        });
         if(data.value){
             this.props.fetchCase(this.props.user.credentials,data.value);
         }
@@ -51,9 +61,11 @@ class PegaCases extends Component {
                             <Form>
                                 <Form.Select label='Case' placeholder='Select a case' 
                                     value={
-                                        (this.props.user.selectedCase.apiData.ID) ?
+                                        (this.state.selectedCase) ? this.state.selectedCase:
+                                        ((this.props.user.selectedCase.apiData.ID) ?
                                             this.props.user.selectedCase.apiData.ID :''
-                                        } 
+                                        )
+                                    } 
                                     options={this.getCases()} onChange={this.displayCase} />
                                 <Container textAlign='right'>
                                     <Form.Button onClick={this.props.reset}>Reset</Form.Button>
