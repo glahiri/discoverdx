@@ -3,12 +3,13 @@ import {connect} from 'react-redux';
 import {login} from '../_actions/userActions';
 import { PortalHeader } from './portal/portalHeader';
 import { PortalContainer } from './portal/portalContainer';
+import '../App.css';
 
 class PegaApp extends Component {
 
     render(){
         return (
-            <div>
+            <div className='App-body'>
                 <PortalHeader/>
                 <PortalContainer/>
             </div>
