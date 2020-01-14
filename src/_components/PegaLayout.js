@@ -65,9 +65,10 @@ class PegaLayout extends Component {
 	}
 	
 	render(){
+		var groupCounter = 0;
 		if(this.props.layout.groups){
 			const items = this.props.layout.groups.map((item) => {
-				return <PegaGroup groups={item} onContentChange={this.props.handleOnChange} readOnly={this.props.readOnly}/>
+				return <PegaGroup groups={item} key={groupCounter++} onContentChange={this.props.handleOnChange} readOnly={this.props.readOnly}/>
 			});
 			return (
 				this.setLayout(items,this.props.layout)
