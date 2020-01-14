@@ -1,16 +1,11 @@
 import React from 'react';
-import { Tab } from "semantic-ui-react";
-import PegaLogin from '../PegaLogin';
 import PegaCaseTypes from '../PegaCaseTypes';
 import PegaCases from '../PegaCases';
 import PegaAssignments from '../PegaAssignments';
 import PegaActions from '../PegaActions';
+import PegaData from '../PegaData';
 
 export const PortalPanes = [
-    {
-        menuItem: 'Getting Started',
-        render: () => <PegaLogin/>
-    },
     {
         menuItem: 'Case Types',
         render: () => <PegaCaseTypes/>
@@ -29,6 +24,6 @@ export const PortalPanes = [
     },
     {
         menuItem: 'Data Type',
-        render: () => <Tab.Pane attached={false}>Data Content</Tab.Pane>
+        render: () => <PegaData/>
     }
 ];

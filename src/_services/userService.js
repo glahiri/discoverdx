@@ -36,3 +36,14 @@ export const userLogin = (endpoint,username,password,dispatch) => {
             }));
         });
 };
+
+export const logoutAppUser = (dispatch) => {
+    return (
+        dispatch(
+            {
+                type: actionTypes.USER_LOGOUT,
+                payload: {}
+            }
+        )
+    );
+};

@@ -1,5 +1,5 @@
 import  React, {Component} from 'react';
-import { Tab, Container, Grid, Divider,	Form, Message } from "semantic-ui-react";
+import { Container, Grid, Divider,	Form, Message, Segment } from "semantic-ui-react";
 import {endpoints} from '../_services/endpoints';
 import {login} from '../_actions/userActions';
 
@@ -58,44 +58,46 @@ class PegaLogin extends Component {
 
     render(){
         return(
-            <Tab.Pane attached={false}>
+            <Container>
+                <Segment>
                 {this.displayMessage()}
-                <Grid columns={1}>
-                    <Grid.Row>
-                        <Grid.Column>
-                            <Form onSubmit={this.applyCreds}>
-                                <Form.Input 
-                                    label='Pega API endpoint' 
-                                    placeholder={endpoints.BASEURL} 
-                                    id='endpoint'
-                                    value={this.state.credentials.endpoint} 
-                                    onChange={this.setCreds}
-                                />
-                                <Form.Group grouped>
+                    <Grid columns={1}>
+                        <Grid.Row>
+                            <Grid.Column>
+                                <Form onSubmit={this.applyCreds}>
                                     <Form.Input 
-                                        label='Username' 
-                                        placeholder='Username' 
-                                        id='username' 
-                                        onChange={this.setCreds} 
-                                        value={this.state.credentials.username}
+                                        label='Pega API endpoint' 
+                                        placeholder={endpoints.BASEURL} 
+                                        id='endpoint'
+                                        value={this.state.credentials.endpoint} 
+                                        onChange={this.setCreds}
                                     />
-                                    <Form.Input 
-                                        label='Password' 
-                                        placeholder='Password' 
-                                        id='password' onChange={this.setCreds} 
-                                        type='password' 
-                                        value={this.state.credentials.password}
-                                    />
-                                </Form.Group>
-                                <Divider/>
-                                <Container textAlign='right'>
-                                    <Form.Button type='submit' primary>Login</Form.Button>
-                                </Container>
-                            </Form>
-                        </Grid.Column>
-                    </Grid.Row>
-                </Grid>
-            </Tab.Pane>
+                                    <Form.Group grouped>
+                                        <Form.Input 
+                                            label='Username' 
+                                            placeholder='Username' 
+                                            id='username' 
+                                            onChange={this.setCreds} 
+                                            value={this.state.credentials.username}
+                                        />
+                                        <Form.Input 
+                                            label='Password' 
+                                            placeholder='Password' 
+                                            id='password' onChange={this.setCreds} 
+                                            type='password' 
+                                            value={this.state.credentials.password}
+                                        />
+                                    </Form.Group>
+                                    <Divider/>
+                                    <Container textAlign='right'>
+                                        <Form.Button type='submit' primary>Login</Form.Button>
+                                    </Container>
+                                </Form>
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
+                </Segment>
+            </Container>
         );
     }
 }

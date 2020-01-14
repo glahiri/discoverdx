@@ -34,7 +34,7 @@ class PegaCaseTypes extends Component {
                         options.push({
                             key: item.ID,
                             value: item.ID,
-                            text: item.ID
+                            text: item.name
                         });
                 }
             )

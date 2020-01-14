@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {PegaGroup} from './PegaGroup';
 import {Container, Header, Grid} from "semantic-ui-react";
+import PegaView from "./PegaView";
 
 class PegaLayout extends Component {
 
@@ -64,12 +65,21 @@ class PegaLayout extends Component {
 	}
 	
 	render(){
-		const items = this.props.layout.groups.map((item) => {
-			return <PegaGroup groups={item} onContentChange={this.props.handleOnChange}/>
-		});
-		return (
-			this.setLayout(items,this.props.layout)
-		);
+		if(this.props.layout.groups){
+			const items = this.props.layout.groups.map((item) => {
+				return <PegaGroup groups={item} onContentChange={this.props.handleOnChange} readOnly={this.props.readOnly}/>
+			});
+			return (
+				this.setLayout(items,this.props.layout)
+			);
+		}
+		else if(this.props.layout.view){
+			return <Grid.Column><PegaView view={this.props.layout.view} readOnly={this.props.readOnly}/></Grid.Column>
+		}
+		else{
+			return <Grid.Column>Could not render Layout</Grid.Column>
+		}
+		
 	}
 }
 export {PegaLayout}

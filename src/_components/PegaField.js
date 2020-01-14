@@ -34,19 +34,27 @@ class PegaField extends Component {
 		switch(control){
 			case 'pxTextInput':
 				{
-					const value = (this.state.value)?this.state.value : ((content.value)?content.value:'');	
-					return (
-						<Form.Field required={content.required}>
-							<label>{label + ' '}{this.modalInfo(content)}</label>
-							<Input 
-								id={content.fieldID} 
-								value={value} 
-								placeholder={label} 
-								required={content.required} 
-								onChange={processChange}
-							/>
-						</Form.Field>
-					)
+					const value = (this.state.value)?this.state.value : ((content.value)?content.value:'');
+					if(!content.readOnly)
+						return (
+							<Form.Field required={content.required}>
+								<label>{label + ' '}{this.modalInfo(content)}</label>
+								<Input 
+									id={content.fieldID} 
+									value={value} 
+									placeholder={label} 
+									required={content.required} 
+									onChange={processChange}
+								/>
+							</Form.Field>
+						);
+					else
+						return (
+							<Form.Field>
+								<label>{label + ' '}{this.modalInfo(content)}</label>
+								{value}
+							</Form.Field>
+						);
 				}				
 			case 'pxAutoComplete':
 				{	
@@ -59,15 +67,23 @@ class PegaField extends Component {
 							text:item.value
 						})
 					})
-					return (
-						<Form.Field required={content.required}>
-							<label>{label + ' '}{this.modalInfo(content)}</label>
-							<Select id={content.fieldID}  
-								placeholder={label} value={value} 
-								search options={options} 
-								onChange={processChange}/>
-						</Form.Field>
-					)
+					if(!content.readOnly)
+						return (
+							<Form.Field required={content.required}>
+								<label>{label + ' '}{this.modalInfo(content)}</label>
+								<Select id={content.fieldID}  
+									placeholder={label} value={value} 
+									search options={options} 
+									onChange={processChange}/>
+							</Form.Field>
+						)
+					else
+						return (
+							<Form.Field required={content.required}>
+								<label>{label + ' '}{this.modalInfo(content)}</label>
+								{value}
+							</Form.Field>
+						)	
 				}
 			case 'pxDropdown':
 				{	
@@ -80,14 +96,22 @@ class PegaField extends Component {
 							text:item.value
 						})
 					})
-					return (
-						<Form.Field required={content.required}>
-							<label>{label + ' '}{this.modalInfo(content)}</label>
-							<Select id={content.fieldID} value={value}
-								placeholder={label} search options={options} 
-								onChange={processChange}/>
-						</Form.Field>
-					)
+					if(!content.readOnly)
+						return (
+							<Form.Field required={content.required}>
+								<label>{label + ' '}{this.modalInfo(content)}</label>
+								<Select id={content.fieldID} value={value}
+									placeholder={label} search options={options} 
+									onChange={processChange}/>
+							</Form.Field>
+						)
+					else
+						return (
+							<Form.Field required={content.required}>
+								<label>{label + ' '}{this.modalInfo(content)}</label>
+								{value}
+							</Form.Field>
+						)
 				}
 			case 'pxDateTime':
 				return (
@@ -95,6 +119,7 @@ class PegaField extends Component {
 						<label>{label + ' '}{this.modalInfo(content)}</label>
 						<Input id={content.fieldID} placeholder={label} 
 							required={content.required} type='date' onChange={processChange}
+							readOnly={content.readOnly}
 						/>
 					</Form.Field>
 				)
@@ -105,7 +130,9 @@ class PegaField extends Component {
 						<Form.Group inline>
 							<Form.Field required={content.required}>
 								<Checkbox id={content.fieldID} checked={checked} 
-								onClick={processChange} label={label}/>
+									onClick={processChange} label={label}
+									disabled={content.readOnly}
+								/>
 								{this.modalInfo(content)}						
 							</Form.Field>							
 						</Form.Group>
@@ -124,6 +151,7 @@ class PegaField extends Component {
 								key={item.key}
 								name={content.fieldID}
 								checked={value === item.key}
+								disabled={content.readOnly}
 								onChange={processChange}
 							/>);
 					});
@@ -144,25 +172,33 @@ class PegaField extends Component {
 						<Form.Field required={content.required}>
 							<label>{label + ' '}{this.modalInfo(content)}</label>
 							<TextArea id={content.fieldID} value={value} 
-							placeholder={label} onChange={processChange}/>
+							placeholder={label} onChange={processChange} readOnly={content.readOnly}/>
 						</Form.Field>
 					)
 				}				
 			default:
 				{
 					const value = (this.state.value)?this.state.value : ((content.value)?content.value:'');
-					return (
-						<Form.Field required={content.required}>
-							<label>{label + ' '}{this.modalInfo(content)}</label>
-							<Input 
-								id={content.fieldID} 
-								value={value} 
-								placeholder={label} 
-								required={content.required} 
-								onChange={processChange}
-							/>
-						</Form.Field>
-					)
+					if(!content.readOnly)
+						return (
+							<Form.Field required={content.required}>
+								<label>{label + ' '}{this.modalInfo(content)}</label>
+								<Input 
+									id={content.fieldID} 
+									value={value} 
+									placeholder={label} 
+									required={content.required} 
+									onChange={processChange}
+								/>
+							</Form.Field>
+						);
+					else
+						return (
+							<Form.Field>
+								<label>{label + ' '}{this.modalInfo(content)}</label>
+								{value}
+							</Form.Field>
+						);
 				}
 				
 		}

@@ -1,16 +1,17 @@
 import  React, {Component} from 'react';
-import { Form, Tab, Header, Segment, Grid, Container } from "semantic-ui-react";
+import { Form, Tab, Header, Segment, Grid, Container, Modal } from "semantic-ui-react";
 import ReactJson from 'react-json-view';
 import { endpoints } from "../_services/endpoints";
 import { getCase, resetCase } from '../_actions/userActions';
 
 import {connect} from 'react-redux';
+import { PegaGroup } from './PegaGroup';
 
 class PegaCases extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            seslectedCase: ''
+            selectedCase: ''
          };
     }
     displayData = () => {
@@ -36,6 +37,15 @@ class PegaCases extends Component {
         return options;
     }
 
+    resetCases = () => {
+        const state = this.state;
+        this.setState({
+            ...state,
+            selectedCase: ''
+        });
+        this.props.reset();
+    }
+
     displayCase = (event,data) => {
         const state = this.state;
         this.setState({
@@ -45,6 +55,41 @@ class PegaCases extends Component {
         if(data.value){
             this.props.fetchCase(this.props.user.credentials,data.value);
         }
+    }
+
+    displayPage = () => {
+        var items = [];
+        if(this.props.user.selectedPage.isVisible){
+            items = this.props.user.selectedPage.apiData.groups.map(
+                (item) => {
+                    return (
+                        <PegaGroup groups={item} readOnly={true}/>
+                    )
+                }
+            )
+        }
+
+        const panes = [
+            {
+                menuItem: 'Content',
+                render: () => 
+                        <Tab.Pane attached={false}>
+                            <Grid>
+                               {items}
+                            </Grid>                               
+                        </Tab.Pane>
+            },
+            {
+                menuItem: 'API Data',
+                render: () => 
+                            <Tab.Pane attached={false}>
+                                <ReactJson theme='ocean' src={this.props.user.selectedPage.apiData}></ReactJson>
+                            </Tab.Pane>
+            }
+        ];
+        return (
+            <Tab menu={{ secondary: true, pointing: true }} panes={panes} />            
+        );
     }
 
     render(){
@@ -67,8 +112,16 @@ class PegaCases extends Component {
                                         )
                                     } 
                                     options={this.getCases()} onChange={this.displayCase} />
-                                <Container textAlign='right'>
-                                    <Form.Button onClick={this.props.reset}>Reset</Form.Button>
+                                <Container>
+                                    <Form.Group inline>
+                                        <Modal trigger={<Form.Button primary>View</Form.Button>}>
+                                            <Header>Review</Header>
+                                            <Modal.Content>
+                                                {this.displayPage()}
+                                            </Modal.Content>
+                                        </Modal>
+                                        <Form.Button onClick={this.resetCases}>Reset</Form.Button>
+                                    </Form.Group>                                                                
                                 </Container>
                             </Form>
                         </Grid.Column>

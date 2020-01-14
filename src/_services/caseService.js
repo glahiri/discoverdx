@@ -40,6 +40,8 @@ export const getCaseByID = (endpoint,username,password,id,dispatch) => {
             headers: { Authorization: "Basic " + encodedUser }
         })
         .then(function(response) {
+            const pageId = 'Review';
+            getPage(endpoint,username,password,id,pageId,dispatch);
             return (
                 dispatch(
                     {
@@ -48,12 +50,39 @@ export const getCaseByID = (endpoint,username,password,id,dispatch) => {
                             selectedCase: response.data
                         }
                     }
-                )
+                )               
             );
         })
         .catch(function(error) {
             return (dispatch({
                 type: actionTypes.CASES_GET_BYID_FAIL,
+                payload: {}
+            }));
+        });
+};
+
+export const getPage = (endpoint,username,password,id,pageId,dispatch) => {
+    const encodedUser = btoa(username + ":" + password);
+
+    return axios
+        .get(endpoint + endpoints.CASES + '/' + id + '/pages/' + pageId, {
+            headers: { Authorization: "Basic " + encodedUser }
+        })
+        .then(function(response) {
+            return (
+                dispatch(
+                    {
+                        type: actionTypes.CASES_GETPAGE_BYID_SUCESS,
+                        payload: {
+                            page: response.data
+                        }
+                    }
+                )               
+            );
+        })
+        .catch(function(error) {
+            return (dispatch({
+                type: actionTypes.CASES_GETPAGE_BYID_FAIL,
                 payload: {}
             }));
         });

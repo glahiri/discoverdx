@@ -25,6 +25,10 @@ const initialState = {
         isVisible: false,
         apiData: {}
     },
+    selectedPage: {
+        isVisible: false,
+        apiData: {}
+    },
     assignments: {
         isVisible: false,
         apiData: {}
@@ -36,6 +40,11 @@ const initialState = {
     },
     selectedView: {
         isVisible: false,
+        apiData: {}
+    },
+    selectedData: {
+        isVisible: false,
+        id:'',
         apiData: {}
     },
     actionStatus: ''
@@ -60,6 +69,8 @@ export const userReducer = (state=initialState,action) => {
                 isLoggedIn: 2,
                 credentials: credentials
             }
+        case actionTypes.USER_LOGOUT:
+            return initialState
         case actionTypes.CASES_GET_SUCCESS:
             return {
                 ...state,
@@ -74,12 +85,28 @@ export const userReducer = (state=initialState,action) => {
                 selectedCase: {
                     isVisible: true,
                     apiData: action.payload.selectedCase
+                },
+                selectedPage: {
+                    isVisible: false,
+                    apiData: {}
+                }
+            }
+        case actionTypes.CASES_GETPAGE_BYID_SUCESS:
+            return {
+                ...state,
+                selectedPage: {
+                    isVisible: true,
+                    apiData: action.payload.page
                 }
             }
         case actionTypes.CASES_GET_BYID_FAIL:
             return {
                 ...state,
                 selectedCase: {
+                    isVisible: false,
+                    apiData: {}
+                },
+                selectedPage: {
                     isVisible: false,
                     apiData: {}
                 }
@@ -170,6 +197,24 @@ export const userReducer = (state=initialState,action) => {
                 selectedAction: {
                     ...state.selectedAction,
                     actionErrors: action.payload.actionErrors
+                }
+            }
+        case actionTypes.DATATYPE_GET_BYID_SUCCESS:
+            return {
+                ...state,
+                selectedData: {
+                    isVisible: true,
+                    id: action.payload.id,
+                    apiData: action.payload.data
+                }
+            }
+        case actionTypes.DATATYPE_GET_BYID_FAIL:
+            return {
+                ...state,
+                selectedData: {
+                    isVisible: false,
+                    id: '',
+                    apiData: {}
                 }
             }
         default:

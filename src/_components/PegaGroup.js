@@ -24,7 +24,7 @@ class PegaGroup extends Component {
 			return (
 				<Grid.Column>
 					<PegaLayout layout={this.props.groups.layout} 
-						handleOnChange={this.props.onContentChange}/>
+						handleOnChange={this.props.onContentChange} readOnly={this.props.readOnly}/>
 				</Grid.Column>
 			)
 		}

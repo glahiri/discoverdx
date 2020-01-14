@@ -147,16 +147,27 @@ class PegaView extends Component {
 				);
 			return (<div></div>);
 		});
-		return (
-			<Form onSubmit={this.handleSubmit}>
-				{this.displayMessage(this.props.user.actionStatus)}
-				<Grid>
-					{items}
-				</Grid>				
-				<Divider/>
-				<Container textAlign='right'><Form.Button type='submit' primary>Submit</Form.Button></Container>
-			</Form>	
-		);
+		if(!this.props.readOnly)
+			return (
+				<Form onSubmit={this.handleSubmit}>
+					{this.displayMessage(this.props.user.actionStatus)}
+					<Grid>
+						{items}
+					</Grid>				
+					<Divider/>
+					<Container textAlign='right'><Form.Button type='submit' primary>Submit</Form.Button></Container>
+				</Form>	
+			);
+		else
+			return (
+				<Form>
+					{this.displayMessage(this.props.user.actionStatus)}
+					<Grid>
+						{items}
+					</Grid>				
+					<Divider/>
+				</Form>	
+			);		
 	}
 }
 

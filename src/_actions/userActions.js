@@ -1,6 +1,8 @@
-import {userLogin} from '../_services/userService';
+import {userLogin, logoutAppUser} from '../_services/userService';
 import { getByID, removeAction, getActionByID, postAssignment, updateAssignment, removeAssignment, resetActionStatus } from '../_services/assignmentService';
 import { getCaseByID, removeCase, createCase, removeCreatedCase } from '../_services/caseService';
+import { getDataPageById, resetData } from '../_services/dataService';
+
 
 export const login = (credentials,dispatch) => {
     userLogin(
@@ -97,4 +99,23 @@ export const resetCreatedCase = (dispatch) => {
 
 export const resetActionMessage = (dispatch) => {
     resetActionStatus(dispatch);
+}
+
+export const logoutUser = (dispatch) => {
+    logoutAppUser(dispatch);
+}
+
+export const getDataPage = (credentials,id,metadata,dispatch) => {
+    getDataPageById(
+        credentials.endpoint,
+        credentials.username,
+        credentials.password,
+        id,
+        metadata,
+        dispatch
+    );
+}
+
+export const resetDataPage = (dispatch) => {
+    resetData(dispatch);
 }
